@@ -26,12 +26,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+    loadData();
   }
 
   @override
@@ -50,7 +49,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Future<http.Response>  getData() async {
-  const url = 'https://about.google/static/data/locations.json';
-  return http.get(url);
+Future<http.Response> getData() async {
+  var url =
+  Uri.https('about.google', 'static/data/locations.json', {'q': '{https}'});
+  return await http.get(url);
+}
+
+void loadData() {
+  getData().then((response) {
+    if(response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print(response.statusCode);
+    }
+  })
+  .catchError((error) {
+    debugPrint(error.toString());
+  });
 }
