@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_http/offices.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,10 +27,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  @override
+  Future<OfficesList> officesList;
+
+ @override
   void initState() {
     super.initState();
-    loadData();
+    officesList = getOfficesList();
+ /*    loadData();*/
   }
 
   @override
@@ -41,15 +44,35 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: Center(
-        child: Container(
-
+        child: FutureBuilder<OfficesList>(
+          future: officesList,
+          builder: (context, snapshot) {
+            if(snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data.offices.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text('${snapshot.data.offices[index].name}'),
+                      subtitle: Text('${snapshot.data.offices[index].address}'),
+                      leading: Image.network('${snapshot.data.offices[index].image}'),
+                      isThreeLine: true,
+                    ),
+                  );
+                }
+              );
+            } else if (snapshot.hasError) {
+              return Text('Error');
+            }
+            return Center(child: CircularProgressIndicator(),);
+          },
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
 
-Future<http.Response> getData() async {
+/*Future<http.Response> getData() async {
   var url =
   Uri.https('about.google', 'static/data/locations.json', {'q': '{https}'});
   return await http.get(url);
@@ -66,4 +89,4 @@ void loadData() {
   .catchError((error) {
     debugPrint(error.toString());
   });
-}
+}*/
