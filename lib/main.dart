@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String/*!*/ title;
 
@@ -27,7 +27,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  Future<OfficesList> officesList;
+  Future<OfficesList>? officesList;
 
  @override
   void initState() {
@@ -49,13 +49,13 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (context, snapshot) {
             if(snapshot.hasData) {
               return ListView.builder(
-                itemCount: snapshot.data.offices.length,
+                itemCount: snapshot.data!/*!*/.offices!.length,
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      title: Text('${snapshot.data.offices[index].name}'),
-                      subtitle: Text('${snapshot.data.offices[index].address}'),
-                      leading: Image.network('${snapshot.data.offices[index].image}'),
+                      title: Text('${snapshot.data!.offices![index].name}'),
+                      subtitle: Text('${snapshot.data!.offices![index].address}'),
+                      leading: Image.network('${snapshot.data!.offices![index].image}'),
                       isThreeLine: true,
                     ),
                   );
