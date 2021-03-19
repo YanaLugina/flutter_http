@@ -9,7 +9,7 @@ class OfficesList {
   OfficesList({this.offices});
 
   // For handle serializable
-    factory OfficesList.fromJson(Map<String?, dynamic>?/*?*//*?*/ json) {
+    factory OfficesList.fromJson(Map<String?, dynamic>?/*?*/ json) {
     var officesJson = json!['offices'] as List;
 
     List<Office> officesList = officesJson.map((i) => Office.fromJson(i)).toList();
