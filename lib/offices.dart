@@ -1,15 +1,16 @@
 import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:http/http.dart' as http;
+part 'offices.g.dart';
 
-
-
+@JsonSerializable()
 class OfficesList {
   List<Office>? offices;
   OfficesList({this.offices});
 
   // For handle serializable
-    factory OfficesList.fromJson(Map<String?, dynamic>?/*?*/ json) {
+/*    factory OfficesList.fromJson(Map<String?, dynamic>?*//*?*//* json) {
     var officesJson = json!['offices'] as List;
 
     List<Office> officesList = officesJson.map((i) => Office.fromJson(i)).toList();
@@ -17,13 +18,13 @@ class OfficesList {
     return OfficesList(
       offices: officesList,
     );
-  }
+  }*/
 
-/*  factory OfficesList.fromJson(Map<String, dynamic> json) => _$OfficesListFromJson(json);
-  Map<String, dynamic> toJson() => _$OfficesListToJson(this);*/
+  factory OfficesList.fromJson(Map<String, dynamic> json) => _$OfficesListFromJson(json);
+  Map<String, dynamic> toJson() => _$OfficesListToJson(this);
 }
 
-
+@JsonSerializable()
 class Office {
 /*  @JsonKey(name: 'dt') // dt
   DateTime dateTime;*/
@@ -34,17 +35,17 @@ class Office {
   Office({ this.name, this.address, this.image });
 
   //  For handle serializable
-  factory Office.fromJson(Map<String?, dynamic>? json) {
+/*  factory Office.fromJson(Map<String?, dynamic>? json) {
     return Office(
       name: json!['name'] as String?,
       address: json['address'] as String?,
       image: json['image'] as String?,
     );
-  }
+  }*/
 
 
-  /*factory Office.fromJson(Map<String, dynamic> json) => _$OfficeFromJson(json);
-  Map<String, dynamic> toJson() => _$OfficeToJson(this);*/
+  factory Office.fromJson(Map<String, dynamic> json) => _$OfficeFromJson(json);
+  Map<String, dynamic> toJson() => _$OfficeToJson(this);
 }
 
 Future<OfficesList> getOfficesList() async {
